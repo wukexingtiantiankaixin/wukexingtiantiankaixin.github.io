@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>星语心愿 · 时光祝福</title>
+    <title>五颗星 · 新年祝福</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -11,6 +11,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
         }
         
         body {
@@ -22,7 +26,7 @@
             letter-spacing: 0.5px;
         }
         
-        /* 开场星空 */
+        /* 星空背景 */
         .star-field {
             position: fixed;
             top: 0;
@@ -49,7 +53,7 @@
             z-index: 1;
         }
         
-        /* 章节通用样式 */
+        /* 章节通用样式 - 修复了滑动问题 */
         .chapter {
             min-height: 100vh;
             display: flex;
@@ -60,6 +64,7 @@
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 1.2s ease, transform 1.2s ease;
+            position: relative;
         }
         
         .chapter.active {
@@ -67,9 +72,9 @@
             transform: translateY(0);
         }
         
-        /* 第一章：初遇时光 */
+        /* 第一章：新年祝福 */
         .chapter-1 {
-            background: radial-gradient(ellipse at center, rgba(26, 35, 126, 0.2) 0%, rgba(13, 17, 38, 0) 70%);
+            background: radial-gradient(ellipse at center, rgba(255, 107, 107, 0.2) 0%, rgba(13, 17, 38, 0) 70%);
         }
         
         .chapter-title {
@@ -77,12 +82,18 @@
             font-size: 4.5rem;
             text-align: center;
             margin-bottom: 40px;
-            background: linear-gradient(90deg, #ffd166, #ff9a76, #c77dff);
+            background: linear-gradient(90deg, #ff6b6b, #ffd166, #06d6a0, #118ab2, #c77dff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             letter-spacing: 6px;
             text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .new-year-title {
+            font-size: 5.5rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 30px rgba(255, 107, 107, 0.7);
         }
         
         .chapter-subtitle {
@@ -98,48 +109,43 @@
         .divider {
             width: 200px;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #ffd166, transparent);
+            background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
             margin: 40px auto;
         }
         
-        /* 第二章：四季祝福 */
+        /* 第二章：五颗星祝福 */
         .chapter-2 {
             background: radial-gradient(ellipse at center, rgba(106, 13, 173, 0.15) 0%, rgba(13, 17, 38, 0) 70%);
         }
         
-        .seasons {
+        .five-stars-container {
             display: flex;
             justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
             gap: 40px;
             margin-top: 60px;
-        }
-        
-        .season {
-            width: 220px;
-            height: 300px;
             perspective: 1000px;
         }
         
-        .season-inner {
+        .star-card {
+            width: 180px;
+            height: 250px;
             position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.8s;
             transform-style: preserve-3d;
+            transition: transform 1s ease;
         }
         
-        .season:hover .season-inner {
-            transform: rotateY(180deg);
+        .star-card:hover {
+            transform: rotateY(10deg) rotateX(5deg);
         }
         
-        .season-front, .season-back {
+        .star-front {
             position: absolute;
             width: 100%;
             height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 30px;
             display: flex;
@@ -147,50 +153,40 @@
             justify-content: center;
             align-items: center;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-        
-        .season-front {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
         }
         
-        .season-back {
-            background: rgba(255, 255, 255, 0.08);
-            transform: rotateY(180deg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            justify-content: center;
-        }
-        
-        .season-icon {
+        .star-icon {
             font-size: 4rem;
             margin-bottom: 25px;
         }
         
-        .season-title {
+        .star-title {
             font-size: 1.8rem;
             margin-bottom: 15px;
             font-weight: 600;
         }
         
-        .season-desc {
+        .star-desc {
             font-size: 1rem;
             color: #b8c1ec;
+            text-align: center;
             line-height: 1.6;
         }
         
-        /* 第三章：诗词祝福 */
+        /* 第三章：新年寄语 */
         .chapter-3 {
             background: radial-gradient(ellipse at center, rgba(13, 71, 161, 0.15) 0%, rgba(13, 17, 38, 0) 70%);
         }
         
-        .poem-container {
+        .wish-container {
             max-width: 900px;
             margin: 60px auto;
             position: relative;
         }
         
-        .poem-line {
+        .wish-line {
             font-size: 1.6rem;
             margin: 30px 0;
             padding: 20px 40px;
@@ -202,91 +198,45 @@
             transition: all 0.8s ease;
         }
         
-        .poem-line.active {
+        .wish-line.active {
             opacity: 1;
             transform: translateX(0);
         }
         
-        .poem-line:nth-child(1) { border-left-color: #ffd166; transition-delay: 0.2s; }
-        .poem-line:nth-child(2) { border-left-color: #ff9a76; transition-delay: 0.4s; }
-        .poem-line:nth-child(3) { border-left-color: #c77dff; transition-delay: 0.6s; }
-        .poem-line:nth-child(4) { border-left-color: #06d6a0; transition-delay: 0.8s; }
-        .poem-line:nth-child(5) { border-left-color: #118ab2; transition-delay: 1s; }
+        .wish-line:nth-child(1) { border-left-color: #ff6b6b; transition-delay: 0.2s; }
+        .wish-line:nth-child(2) { border-left-color: #ffd166; transition-delay: 0.4s; }
+        .wish-line:nth-child(3) { border-left-color: #06d6a0; transition-delay: 0.6s; }
+        .wish-line:nth-child(4) { border-left-color: #118ab2; transition-delay: 0.8s; }
+        .wish-line:nth-child(5) { border-left-color: #c77dff; transition-delay: 1s; }
         
-        /* 第四章：星光祈愿 */
+        /* 第四章：烟花动画 */
         .chapter-4 {
             background: radial-gradient(ellipse at center, rgba(229, 9, 127, 0.1) 0%, rgba(13, 17, 38, 0) 70%);
-        }
-        
-        .wish-stars {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 60px;
-        }
-        
-        .wish-star {
-            width: 180px;
-            height: 180px;
-            position: relative;
-        }
-        
-        .wish-star-inner {
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.5s ease;
-            position: relative;
             overflow: hidden;
         }
         
-        .wish-star-inner:before {
-            content: '';
+        .fireworks-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin-top: 60px;
+        }
+        
+        .firework {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff6b6b;
+            animation: explode 3s infinite;
         }
         
-        .wish-star:hover .wish-star-inner {
-            transform: scale(1.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-        
-        .wish-star:hover .wish-star-inner:before {
-            opacity: 1;
-        }
-        
-        .wish-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #ffd166;
-        }
-        
-        .wish-text {
-            font-size: 1rem;
-            text-align: center;
-            color: #b8c1ec;
-        }
-        
-        /* 第五章：永恒祝福 */
+        /* 第五章：最终祝福 */
         .chapter-5 {
             background: radial-gradient(ellipse at center, rgba(255, 209, 102, 0.1) 0%, rgba(13, 17, 38, 0) 70%);
         }
         
-        .final-message {
+        .final-blessing {
             max-width: 900px;
             margin: 0 auto;
             text-align: center;
@@ -296,6 +246,25 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .blessing-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #ffd166;
+        }
+        
+        .blessing-text {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            color: #b8c1ec;
+        }
+        
+        .highlight {
+            color: #ff6b6b;
+            font-weight: bold;
+            font-size: 1.5rem;
         }
         
         .signature {
@@ -313,7 +282,7 @@
             letter-spacing: 3px;
         }
         
-        /* 导航指示器 */
+        /* 导航指示器 - 修复了点击跳转 */
         .chapter-indicator {
             position: fixed;
             right: 30px;
@@ -332,15 +301,30 @@
             background: rgba(255, 255, 255, 0.2);
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
         }
         
         .indicator-dot.active {
-            background: #ffd166;
+            background: #ff6b6b;
             transform: scale(1.3);
-            box-shadow: 0 0 10px #ffd166;
+            box-shadow: 0 0 10px #ff6b6b;
         }
         
-        /* 滚动提示 */
+        .indicator-dot:hover::after {
+            content: attr(data-title);
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        
+        /* 滚动提示 - 修复了点击事件 */
         .scroll-hint {
             position: fixed;
             bottom: 30px;
@@ -354,6 +338,17 @@
             gap: 10px;
             z-index: 100;
             animation: bounce 2s infinite;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-hint:hover {
+            background: rgba(255, 107, 107, 0.2);
+            transform: translateX(-50%) scale(1.05);
         }
         
         /* 动画定义 */
@@ -377,22 +372,37 @@
             50% { opacity: 0.7; }
         }
         
+        @keyframes explode {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-200px) scale(0);
+                opacity: 0;
+            }
+        }
+        
         /* 响应式设计 */
         @media (max-width: 992px) {
             .chapter-title {
                 font-size: 3.5rem;
             }
             
-            .seasons {
+            .new-year-title {
+                font-size: 4rem;
+            }
+            
+            .five-stars-container {
                 gap: 20px;
             }
             
-            .season {
-                width: 200px;
-                height: 280px;
+            .star-card {
+                width: 160px;
+                height: 230px;
             }
             
-            .poem-line {
+            .wish-line {
                 font-size: 1.4rem;
             }
         }
@@ -403,31 +413,38 @@
                 letter-spacing: 3px;
             }
             
+            .new-year-title {
+                font-size: 3rem;
+            }
+            
             .chapter-subtitle {
                 font-size: 1.4rem;
             }
             
-            .season {
-                width: 160px;
-                height: 240px;
+            .star-card {
+                width: 140px;
+                height: 200px;
             }
             
-            .season-icon {
+            .star-icon {
                 font-size: 3rem;
             }
             
-            .season-title {
+            .star-title {
                 font-size: 1.5rem;
             }
             
-            .poem-line {
+            .wish-line {
                 font-size: 1.2rem;
                 padding: 15px 20px;
             }
             
-            .wish-star {
-                width: 140px;
-                height: 140px;
+            .blessing-title {
+                font-size: 2rem;
+            }
+            
+            .blessing-text {
+                font-size: 1.2rem;
             }
             
             .signature {
@@ -444,43 +461,42 @@
                 font-size: 2.2rem;
             }
             
+            .new-year-title {
+                font-size: 2.5rem;
+            }
+            
             .chapter-subtitle {
                 font-size: 1.2rem;
             }
             
-            .seasons {
+            .five-stars-container {
                 flex-direction: column;
                 align-items: center;
             }
             
-            .season {
+            .star-card {
                 width: 280px;
                 height: 180px;
             }
             
-            .season-inner {
-                display: flex;
+            .star-front {
+                flex-direction: row;
+                justify-content: flex-start;
+                padding: 20px;
             }
             
-            .season-front, .season-back {
-                position: relative;
-                width: 50%;
-                height: 100%;
-                backface-visibility: visible;
-                transform: none;
+            .star-icon {
+                margin-bottom: 0;
+                margin-right: 20px;
+                font-size: 2.5rem;
             }
             
-            .season:hover .season-inner {
-                transform: none;
+            .star-desc {
+                text-align: left;
             }
             
-            .wish-stars {
-                gap: 15px;
-            }
-            
-            .wish-star {
-                width: 130px;
-                height: 130px;
+            .chapter-indicator {
+                display: none; /* 在小屏幕上隐藏指示器 */
             }
         }
     </style>
@@ -491,181 +507,178 @@
     
     <!-- 章节导航指示器 -->
     <div class="chapter-indicator" id="chapterIndicator">
-        <div class="indicator-dot active" data-chapter="1"></div>
-        <div class="indicator-dot" data-chapter="2"></div>
-        <div class="indicator-dot" data-chapter="3"></div>
-        <div class="indicator-dot" data-chapter="4"></div>
-        <div class="indicator-dot" data-chapter="5"></div>
+        <div class="indicator-dot active" data-title="新年快乐" data-chapter="1"></div>
+        <div class="indicator-dot" data-title="五颗星祝福" data-chapter="2"></div>
+        <div class="indicator-dot" data-title="新年寄语" data-chapter="3"></div>
+        <div class="indicator-dot" data-title="烟花绽放" data-chapter="4"></div>
+        <div class="indicator-dot" data-title="最终祝福" data-chapter="5"></div>
     </div>
     
     <!-- 滚动提示 -->
     <div class="scroll-hint" id="scrollHint">
-        <span>轻轻滑动，开启祝福之旅</span>
+        <span>滑动或点击继续</span>
         <i class="fas fa-chevron-down"></i>
     </div>
     
     <div class="container">
-        <!-- 第一章：初遇时光 -->
+        <!-- 第一章：新年祝福 -->
         <section class="chapter chapter-1 active" id="chapter1">
-            <h1 class="chapter-title">星语心愿</h1>
+            <h1 class="new-year-title">新年快乐</h1>
+            <h2 class="chapter-title">五颗星 · 开心顺遂</h2>
             <div class="divider"></div>
             <p class="chapter-subtitle">
-                时光如诗，岁月如歌。谨以此页，寄托我最真挚的祝福与祈愿。<br>
-                愿这字里行间的星光，能照亮你生命中的每一段旅程。
+                值此新春佳节，谨以五颗星的光芒，<br>
+                送上我最真挚的祝福。<br>
+                愿五颗星的光辉，照亮你新年的每一天。
             </p>
         </section>
         
-        <!-- 第二章：四季祝福 -->
+        <!-- 第二章：五颗星祝福 -->
         <section class="chapter chapter-2" id="chapter2">
-            <h2 class="chapter-title">四季常安</h2>
+            <h2 class="chapter-title">五颗星的祝福</h2>
             <div class="divider"></div>
-            <p class="chapter-subtitle">愿你的生命如四季轮回，每个时节都有独特的风景与收获</p>
+            <p class="chapter-subtitle">五颗星代表五重祝福，愿你新的一年万事顺遂</p>
             
-            <div class="seasons">
-                <div class="season">
-                    <div class="season-inner">
-                        <div class="season-front">
-                            <div class="season-icon">🌱</div>
-                            <h3 class="season-title">春 · 生机</h3>
-                        </div>
-                        <div class="season-back">
-                            <p class="season-desc">愿你的生命如春日新芽，充满生机与希望，在阳光雨露中茁壮成长</p>
+            <div class="five-stars-container">
+                <div class="star-card">
+                    <div class="star-front">
+                        <div class="star-icon">⭐</div>
+                        <div>
+                            <h3 class="star-title">健康星</h3>
+                            <p class="star-desc">身体健康，活力充沛，远离疾病困扰</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="season">
-                    <div class="season-inner">
-                        <div class="season-front">
-                            <div class="season-icon">🌻</div>
-                            <h3 class="season-title">夏 · 绚烂</h3>
-                        </div>
-                        <div class="season-back">
-                            <p class="season-desc">愿你的时光如夏花绚烂，热情绽放，在生命最热烈的季节里闪耀光芒</p>
+                <div class="star-card">
+                    <div class="star-front">
+                        <div class="star-icon">⭐</div>
+                        <div>
+                            <h3 class="star-title">快乐星</h3>
+                            <p class="star-desc">笑口常开，心情愉悦，每一天都充满阳光</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="season">
-                    <div class="season-inner">
-                        <div class="season-front">
-                            <div class="season-icon">🍂</div>
-                            <h3 class="season-title">秋 · 丰盈</h3>
-                        </div>
-                        <div class="season-back">
-                            <p class="season-desc">愿你的收获如秋实累累，满载而归，在岁月沉淀中品味生命的甘甜</p>
+                <div class="star-card">
+                    <div class="star-front">
+                        <div class="star-icon">⭐</div>
+                        <div>
+                            <h3 class="star-title">成功星</h3>
+                            <p class="star-desc">事业顺利，学业进步，目标达成</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="season">
-                    <div class="season-inner">
-                        <div class="season-front">
-                            <div class="season-icon">❄️</div>
-                            <h3 class="season-title">冬 · 宁静</h3>
+                <div class="star-card">
+                    <div class="star-front">
+                        <div class="star-icon">⭐</div>
+                        <div>
+                            <h3 class="star-title">财富星</h3>
+                            <p class="star-desc">财源广进，经济宽裕，物质丰盈</p>
                         </div>
-                        <div class="season-back">
-                            <p class="season-desc">愿你的心境如冬雪宁静，澄澈明净，在时光沉淀中收获智慧与从容</p>
+                    </div>
+                </div>
+                
+                <div class="star-card">
+                    <div class="star-front">
+                        <div class="star-icon">⭐</div>
+                        <div>
+                            <h3 class="star-title">平安星</h3>
+                            <p class="star-desc">出入平安，家庭和睦，生活安稳</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- 第三章：诗词祝福 -->
+        <!-- 第三章：新年寄语 -->
         <section class="chapter chapter-3" id="chapter3">
-            <h2 class="chapter-title">诗韵祝福</h2>
+            <h2 class="chapter-title">新年寄语</h2>
             <div class="divider"></div>
-            <p class="chapter-subtitle">以诗为媒，以词为介，寄托我最深切的祝愿</p>
+            <p class="chapter-subtitle">愿这些祝福的话语，伴随你迎接新的一年</p>
             
-            <div class="poem-container">
-                <div class="poem-line" id="poemLine1">
-                    愿你如晨曦初露，温柔而不失光芒，照亮前行的每一步
+            <div class="wish-container">
+                <div class="wish-line" id="wishLine1">
+                    愿新年胜旧年，愿将来胜过往
                 </div>
-                <div class="poem-line" id="poemLine2">
-                    愿你如溪水长流，清澈而坚韧不息，穿越山川仍保初心
+                <div class="wish-line" id="wishLine2">
+                    愿五颗星的祝福，照亮你前行的每一步
                 </div>
-                <div class="poem-line" id="poemLine3">
-                    愿你如古树参天，历经风雨仍挺拔，年轮记载岁月静好
+                <div class="wish-line" id="wishLine3">
+                    愿每一天都有新的收获，每一刻都充满喜悦
                 </div>
-                <div class="poem-line" id="poemLine4">
-                    愿你如星辰永恒，在浩瀚夜空中闪耀，指引自己也温暖他人
+                <div class="wish-line" id="wishLine4">
+                    愿所有的努力都不被辜负，所有的期待都能实现
                 </div>
-                <div class="poem-line" id="poemLine5">
-                    愿你如春风化雨，润物无声却有情，所到之处皆是生机
+                <div class="wish-line" id="wishLine5">
+                    愿这个新年，成为你美好旅程的新起点
                 </div>
             </div>
         </section>
         
-        <!-- 第四章：星光祈愿 -->
+        <!-- 第四章：烟花绽放 -->
         <section class="chapter chapter-4" id="chapter4">
-            <h2 class="chapter-title">星光祈愿</h2>
+            <h2 class="chapter-title">烟花绽放</h2>
             <div class="divider"></div>
-            <p class="chapter-subtitle">摘取五颗最亮的星，寄托我最诚挚的祈愿</p>
+            <p class="chapter-subtitle">如同夜空绽放的烟花，愿你的生活绚丽多彩</p>
             
-            <div class="wish-stars">
-                <div class="wish-star">
-                    <div class="wish-star-inner">
-                        <div class="wish-icon">✨</div>
-                        <p class="wish-text">愿健康常伴，身体安康如松柏长青</p>
-                    </div>
-                </div>
-                
-                <div class="wish-star">
-                    <div class="wish-star-inner">
-                        <div class="wish-icon">💖</div>
-                        <p class="wish-text">愿喜悦满怀，心中常驻阳光与欢笑</p>
-                    </div>
-                </div>
-                
-                <div class="wish-star">
-                    <div class="wish-star-inner">
-                        <div class="wish-icon">📚</div>
-                        <p class="wish-text">愿智慧增长，学识如海深广无涯</p>
-                    </div>
-                </div>
-                
-                <div class="wish-star">
-                    <div class="wish-star-inner">
-                        <div class="wish-icon">🤝</div>
-                        <p class="wish-text">愿情谊长存，知己相伴岁月不孤</p>
-                    </div>
-                </div>
-                
-                <div class="wish-star">
-                    <div class="wish-star-inner">
-                        <div class="wish-icon">🎯</div>
-                        <p class="wish-text">愿梦想成真，前路坦荡如愿以偿</p>
-                    </div>
-                </div>
+            <div class="fireworks-container" id="fireworksContainer">
+                <!-- 烟花将通过JavaScript动态生成 -->
             </div>
         </section>
         
-        <!-- 第五章：永恒祝福 -->
+        <!-- 第五章：最终祝福 -->
         <section class="chapter chapter-5" id="chapter5">
-            <div class="final-message">
-                <h2 class="chapter-title">永恒祝福</h2>
+            <div class="final-blessing">
+                <h2 class="blessing-title">新年最终祝福</h2>
                 <div class="divider"></div>
-                <p class="chapter-subtitle" style="font-size: 1.4rem; margin-bottom: 40px;">
-                    时光的河缓缓流淌，带走了许多，也沉淀了许多。<br>
-                    唯愿这份祝福，能穿越时间的长河，抵达你的心间。<br><br>
-                    愿你的人生之旅，有清风拂面，有明月相伴；<br>
-                    愿你的心灵之所，有诗书为友，有琴音为伴；<br>
-                    愿你的世界之中，有爱环绕，有梦可追。<br><br>
-                    纵使前路或有风雨，也愿你能看见彩虹；<br>
-                    纵使黑夜漫长，也愿你能成为自己的星光。<br><br>
-                    最后，愿你始终保有对生活的热爱，<br>
-                    对美好的向往，对未来的期待。<br>
-                    愿你被这世界温柔以待，亦能温柔以待这世界。
+                
+                <p class="blessing-text">
+                    在这辞旧迎新的时刻，我想对你说：<br><br>
+                    
+                    感谢过去一年的相遇与陪伴，<br>
+                    期待新一年的美好与精彩。<br><br>
+                    
+                    愿你<span class="highlight">五颗星开心顺遂</span>，<br>
+                    愿你生活如诗，前程似锦。<br><br>
+                    
+                    愿所有的烦恼都随旧年而去，<br>
+                    所有的幸福都随新年而来。<br><br>
+                    
+                    祝你新年快乐，<br>
+                    愿新的一年，<br>
+                    每一天都有五颗星的光芒相伴。
                 </p>
                 
-                <div class="signature">诚心祈愿</div>
-                <div class="date">岁次癸卯 · 仲夏</div>
+                <div class="signature">诚挚祝福</div>
+                <div class="date">新年 · 快乐</div>
             </div>
         </section>
     </div>
     
     <script>
+        // 修复滑动问题 - 使用IntersectionObserver检测章节
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建星空背景
+            createStarfield();
+            
+            // 初始化章节观察器
+            initChapterObserver();
+            
+            // 初始化导航指示器
+            initIndicatorNavigation();
+            
+            // 初始化滚动提示
+            initScrollHint();
+            
+            // 初始化烟花效果
+            initFireworks();
+            
+            // 初始化祝福语动画
+            initWishAnimation();
+        });
+        
         // 创建星空背景
         function createStarfield() {
             const starField = document.getElementById('starField');
@@ -694,23 +707,32 @@
             }
         }
         
-        // 章节滚动检测
-        function initScrollDetection() {
+        // 初始化章节观察器 - 修复了滑动检测
+        function initChapterObserver() {
             const chapters = document.querySelectorAll('.chapter');
             const indicators = document.querySelectorAll('.indicator-dot');
             const scrollHint = document.getElementById('scrollHint');
             
-            let currentChapter = 1;
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5
+            };
             
-            // 观察章节进入视口
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
+                        // 获取当前章节编号
                         const chapterId = entry.target.id;
                         const chapterNum = parseInt(chapterId.replace('chapter', ''));
                         
-                        // 更新当前章节
-                        currentChapter = chapterNum;
+                        // 移除所有章节的active类
+                        chapters.forEach(chapter => {
+                            chapter.classList.remove('active');
+                        });
+                        
+                        // 为当前章节添加active类
+                        entry.target.classList.add('active');
                         
                         // 更新指示器
                         indicators.forEach((dot, index) => {
@@ -729,142 +751,205 @@
                             scrollHint.style.opacity = '1';
                             scrollHint.style.pointerEvents = 'all';
                         }
-                        
-                        // 激活诗词行
-                        if (chapterNum === 3) {
-                            setTimeout(() => {
-                                const poemLines = document.querySelectorAll('.poem-line');
-                                poemLines.forEach((line, index) => {
-                                    setTimeout(() => {
-                                        line.classList.add('active');
-                                    }, index * 500);
-                                });
-                            }, 500);
-                        }
                     }
                 });
-            }, {
-                threshold: 0.5
-            });
+            }, observerOptions);
             
             // 观察所有章节
             chapters.forEach(chapter => {
                 observer.observe(chapter);
             });
+        }
+        
+        // 初始化导航指示器点击事件
+        function initIndicatorNavigation() {
+            const indicators = document.querySelectorAll('.indicator-dot');
             
-            // 点击指示器跳转到对应章节
             indicators.forEach((dot, index) => {
                 dot.addEventListener('click', () => {
                     const chapterId = `chapter${index + 1}`;
                     const chapterElement = document.getElementById(chapterId);
                     
                     if (chapterElement) {
+                        // 平滑滚动到章节
                         chapterElement.scrollIntoView({
                             behavior: 'smooth',
                             block: 'center'
                         });
+                        
+                        // 更新指示器状态
+                        indicators.forEach(d => d.classList.remove('active'));
+                        dot.classList.add('active');
                     }
                 });
             });
+        }
+        
+        // 初始化滚动提示
+        function initScrollHint() {
+            const scrollHint = document.getElementById('scrollHint');
             
-            // 滚动提示点击跳转到下一章
             scrollHint.addEventListener('click', () => {
-                const nextChapter = currentChapter < 5 ? currentChapter + 1 : 5;
-                const nextChapterId = `chapter${nextChapter}`;
-                const nextChapterElement = document.getElementById(nextChapterId);
+                // 找到当前活跃章节
+                const activeChapter = document.querySelector('.chapter.active');
+                if (!activeChapter) return;
                 
-                if (nextChapterElement) {
-                    nextChapterElement.scrollIntoView({
+                // 找到下一个章节
+                const currentId = activeChapter.id;
+                const currentNum = parseInt(currentId.replace('chapter', ''));
+                const nextNum = currentNum < 5 ? currentNum + 1 : 1;
+                const nextChapter = document.getElementById(`chapter${nextNum}`);
+                
+                if (nextChapter) {
+                    nextChapter.scrollIntoView({
                         behavior: 'smooth',
                         block: 'center'
                     });
                 }
             });
-        }
-        
-        // 添加季节卡片的悬浮效果
-        function initSeasonCards() {
-            const seasons = document.querySelectorAll('.season');
             
-            seasons.forEach((season, index) => {
-                // 为每个季节卡片添加随机漂浮动画
-                const delay = index * 0.3;
-                season.style.animation = `float 6s ease-in-out infinite`;
-                season.style.animationDelay = `${delay}s`;
+            // 添加鼠标滚轮事件
+            let isScrolling = false;
+            window.addEventListener('wheel', (e) => {
+                if (isScrolling) return;
                 
-                // 点击卡片也可以翻转
-                season.addEventListener('click', () => {
-                    const inner = season.querySelector('.season-inner');
-                    inner.style.transform = inner.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
-                });
-            });
-        }
-        
-        // 添加祈愿星的交互效果
-        function initWishStars() {
-            const wishStars = document.querySelectorAll('.wish-star');
-            
-            wishStars.forEach((star, index) => {
-                // 为每个星星添加随机脉冲动画
-                const delay = index * 0.2;
-                star.style.animation = `pulse 4s ease-in-out infinite`;
-                star.style.animationDelay = `${delay}s`;
+                isScrolling = true;
                 
-                // 点击星星放大效果
-                star.addEventListener('click', () => {
-                    star.querySelector('.wish-star-inner').style.transform = 'scale(1.15)';
-                    
-                    setTimeout(() => {
-                        star.querySelector('.wish-star-inner').style.transform = 'scale(1)';
-                       < !DOCTYPE    文档类型html>}, 300);
-                });
-            });
-        }
-        
-        // 页面加载完成后初始化
-        window.addEventListener('load', () => {窗口。addEventListener('load'   “负载”, () => {
-            // 创建星空背景
-            createStarfield();
-            
-            // 初始化章节滚动检测
-            initScrollDetection();
-            
-            // 初始化季节卡片效果
-            initSeasonCards();
-            
-            // 初始化祈愿星效果
-            initWishStars();
-            
-            // 添加页面加载完成后的初始动画
-            setTimeout(() => {   setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 300);
-            
-            // 添加键盘导航支持
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowDown' || e.key === ' ') {
-                    e.preventDefault();
-                    document.querySelector('.scroll-hint').click();
+                // 找到当前活跃章节
+                const activeChapter = document.querySelector('.chapter.active');
+                if (!activeChapter) return;
+                
+                const currentId = activeChapter.id;
+                const currentNum = parseInt(currentId.replace('chapter', ''));
+                
+                let nextNum;
+                if (e.deltaY > 0) {
+                    // 向下滚动，前往下一章
+                    nextNum = currentNum < 5 ? currentNum + 1 : 5;
+                } else {
+                    // 向上滚动，前往上一章
+                    nextNum = currentNum > 1 ? currentNum - 1 : 1;
                 }
                 
-                // 数字键1-5跳转到对应章节
-                if (e.key >= '1' && e.key <= '5') {
-                    const chapterId = `chapter${e.key}`;
-                    const chapterElement = document.getElementById(chapterId);
-                    
-                    if (chapterElement) {
-                        chapterElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
+                const nextChapter = document.getElementById(`chapter${nextNum}`);
+                
+                if (nextChapter) {
+                    nextChapter.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+                
+                // 防止过快滚动
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 800);
+            });
+        }
+        
+        // 初始化烟花效果
+        function initFireworks() {
+            const container = document.getElementById('fireworksContainer');
+            
+            // 创建烟花
+            function createFirework() {
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                
+                // 随机位置
+                const left = Math.random() * 100;
+                firework.style.left = `${left}%`;
+                
+                // 随机大小
+                const size = Math.random() * 10 + 5;
+                firework.style.width = `${size}px`;
+                firework.style.height = `${size}px`;
+                
+                // 随机颜色
+                const colors = ['#ff6b6b', '#ffd166', '#06d6a0', '#118ab2', '#c77dff'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                firework.style.backgroundColor = color;
+                firework.style.boxShadow = `0 0 20px ${color}`;
+                
+                // 随机动画时长
+                const duration = Math.random() * 2 + 1;
+                firework.style.animationDuration = `${duration}s`;
+                
+                // 随机延迟
+                const delay = Math.random() * 3;
+                firework.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(firework);
+                
+                // 动画结束后移除
+                setTimeout(() => {
+                    if (firework.parentNode === container) {
+                        container.removeChild(firework);
                     }
-                }
-            });
-        });
+                }, duration * 1000);
+            }
+            
+            // 每隔一段时间创建烟花
+            setInterval(createFirework, 300);
+            
+            // 初始创建一些烟花
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createFirework();
+                }, i * 150);
+            }
+        }
         
-        // 初始页面透明度
-        document.body.style.opacity = '0';
-        document.body.style.transition = 'opacity 1s ease';
+        // 初始化祝福语动画
+           < !DOCTYPE    文档类型html>function   函数 initWishAnimation() {
+            const   常量 wishLines = document   文档.querySelectorAll('.wish-line');
+            
+            // 监听第三章进入视口
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // 章节进入视口后，逐个显示祝福语
+                        wishLines.forEach((line, index) => {
+                            setTimeout(() => {
+                                line.classList.add('active');
+                            }, index * 500);
+                        });
+                        
+                        // 停止观察，避免重复触发
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+            
+            // 观察第三章
+            const chapter3 = document.getElementById('chapter3');
+            if (chapter3) {
+                observer.observe(chapter3);
+            }
+        }
+        
+        // 添加键盘导航
+        document.addEventListener('keydown', (e) => {文档。addEventListener('keydown'   “keydown”, (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault();
+                document.getElementById('scrollHint').click();
+            }
+            
+            // 数字键1-5跳转到对应章节
+            if (e.key >= '1' && e.key <= '5') {
+                const chapterId = `chapter${e.key}`;
+                const chapterElement = document.getElementById(chapterId);
+                
+                if (chapterElement) {
+                    chapterElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            }
+        });
     </script>   < / script>
 </body>   < / body>
 </html>   < / html>
